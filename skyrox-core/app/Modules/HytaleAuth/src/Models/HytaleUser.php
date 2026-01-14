@@ -29,6 +29,7 @@ class HytaleUser extends Model
         'is_verified',
         'profile_data',
         'preferences',
+        'auth0_user_id',
     ];
 
     protected $casts = [
@@ -156,13 +157,13 @@ class HytaleUser extends Model
     {
         $fields = ['username', 'email', 'display_name', 'avatar_url'];
         $completed = 0;
-        
+
         foreach ($fields as $field) {
             if (!empty($this->{$field})) {
                 $completed++;
             }
         }
-        
+
         return (int) (($completed / count($fields)) * 100);
     }
 
@@ -175,7 +176,7 @@ class HytaleUser extends Model
         if (!$token) {
             return false;
         }
-        
+
         $scopes = explode(' ', $token->scope ?? '');
         return in_array($scope, $scopes);
     }
@@ -218,7 +219,7 @@ class HytaleUser extends Model
     {
         $this->terminateAllSessions();
         $this->revokeAllTokens();
-        
+
         $this->update([
             'is_active' => false,
         ]);

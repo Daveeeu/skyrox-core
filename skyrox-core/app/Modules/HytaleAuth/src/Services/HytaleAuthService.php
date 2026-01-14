@@ -510,11 +510,9 @@ class HytaleAuthService
         $user = HytaleUser::where('hytale_uuid', $profileUuid)->first();
 
         if (!$user) {
-            // Owner UUID alapján is keresünk
             $user = HytaleUser::where('hytale_player_id', $ownerUuid)->first();
         }
 
-        // Skin JSON helyes parsing-ja és újra kódolása
         $profileData = [
             'owner_uuid' => $ownerUuid,
             'profiles' => $profilesData['profiles'],
@@ -528,9 +526,10 @@ class HytaleAuthService
             'username' => $username,
             'display_name' => $username,
             'is_verified' => true,
-            'profile_data' => json_encode($profileData), // Explicit JSON encode
+            'profile_data' => $profileData, // Laravel automatikusan json_encode-ol
             'is_active' => true,
             'email' => "hytale_{$ownerUuid}@hytale.local",
+            'auth0_user_id' => 'teszt', // ← EZ A KULCSFONTOSSÁGÚ SOR!
             'updated_at' => now(),
             'created_at' => $user ? $user->created_at : now(),
         ];
@@ -543,6 +542,7 @@ class HytaleAuthService
 
         return $user;
     }
+
 
 
     /**
