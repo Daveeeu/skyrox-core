@@ -148,14 +148,18 @@ class HytaleAuthController extends Controller
     )]
     public function pollDeviceToken(DeviceCodeRequest $request): JsonResponse
     {
-        dd(1);
-        $result = $this->hytaleAuthService->pollDeviceToken(
-            $request->validated('device_code'),
-            $request->validated('user_code')
-        );
+        // validated() NEM létezik FormRequest-ben - ez a hiba!
+        $deviceCode = $request->input('device_code');
+        $userCode = $request->input('user_code');
+
+        // Validáció kézi ellenőrzése
+        if (!$request->validated()) {
+            return response()->json(['error' => 'Validation failed'], 422);
+        }
+
+        $result = $this->hytaleAuthService->pollDeviceToken($deviceCode, $userCode);
 
         if (!$result['success']) {
-            // Státusz alapú HTTP kódok
             $statusCode = match($result['status'] ?? 'error') {
                 'pending' => 202,
                 'slow_down' => 429,
@@ -169,6 +173,7 @@ class HytaleAuthController extends Controller
 
         return response()->json($result, 200);
     }
+
 
     /**
      * OAuth2 callback kezelése (DEPRECATED)

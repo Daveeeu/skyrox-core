@@ -514,31 +514,36 @@ class HytaleAuthService
             $user = HytaleUser::where('hytale_player_id', $ownerUuid)->first();
         }
 
+        // Skin JSON helyes parsing-ja és újra kódolása
+        $profileData = [
+            'owner_uuid' => $ownerUuid,
+            'profiles' => $profilesData['profiles'],
+            'selected_profile' => $selectedProfile,
+            'auth_method' => 'device_flow',
+        ];
+
         $userData = [
             'hytale_uuid' => $profileUuid,
             'hytale_player_id' => $ownerUuid,
             'username' => $username,
             'display_name' => $username,
-            'is_verified' => true, // Hytale OAuth2-n keresztül hitelesített
-            'profile_data' => [
-                'owner_uuid' => $ownerUuid,
-                'profiles' => $profilesData['profiles'],
-                'selected_profile' => $selectedProfile,
-                'auth_method' => 'device_flow',
-            ],
+            'is_verified' => true,
+            'profile_data' => json_encode($profileData), // Explicit JSON encode
+            'is_active' => true,
+            'email' => "hytale_{$ownerUuid}@hytale.local",
+            'updated_at' => now(),
+            'created_at' => $user ? $user->created_at : now(),
         ];
 
         if ($user) {
             $user->update($userData);
         } else {
-            $user = HytaleUser::create(array_merge($userData, [
-                'is_active' => true,
-                'email' => "hytale_{$ownerUuid}@hytale.local", // Placeholder email
-            ]));
+            $user = HytaleUser::create($userData);
         }
 
         return $user;
     }
+
 
     /**
      * User session létrehozása Hytale adatokkal
