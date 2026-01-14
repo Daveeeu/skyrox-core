@@ -15,7 +15,7 @@ class DeviceCodeRequest extends FormRequest
     {
         return [
             'device_code' => ['required', 'string'],
-            'user_code' => ['required', 'string', 'regex:/^[A-Z0-9]{4}-[A-Z0-9]{4}$/'],
+            'user_code' => ['required', 'string'],
         ];
     }
 
