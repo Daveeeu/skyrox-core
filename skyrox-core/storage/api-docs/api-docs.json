@@ -12,14 +12,14 @@
         }
     ],
     "paths": {
-        "/player/login": {
+        "/login": {
             "post": {
                 "tags": [
                     "Player Management"
                 ],
                 "summary": "Játékos bejelentkezés",
                 "description": "Fellépti a játékost a szerverre Hytale UUID alapján",
-                "operationId": "a126506f328c5d598b7bc4ed7fc9ddc3",
+                "operationId": "24fbeda773da2e319e0800b6f7200c23",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -105,14 +105,14 @@
                 }
             }
         },
-        "/player/logout": {
+        "/logout": {
             "post": {
                 "tags": [
                     "Player Management"
                 ],
                 "summary": "Játékos kijelentkezés",
                 "description": "Kilépteti a játékost a szerverről UUID alapján",
-                "operationId": "b8e9289e0ad4c62f491cae24349cc621",
+                "operationId": "23d8f8b8eb1ca3780b04685a2715773c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -177,14 +177,14 @@
                 }
             }
         },
-        "/player/permission/check": {
+        "/permission/check": {
             "get": {
                 "tags": [
                     "Permission Management"
                 ],
                 "summary": "Jogosultság ellenőrzése",
                 "description": "Ellenőrzi, hogy az adott Hytale UUID-val rendelkező játékosnak van-e jogosultsága",
-                "operationId": "98fce01eb35931818fc601816b29a6aa",
+                "operationId": "381ff07925b6de2df109bd26f18dfb9a",
                 "parameters": [
                     {
                         "name": "hytale_uuid",
@@ -255,14 +255,14 @@
                 }
             }
         },
-        "/player/online": {
+        "/online": {
             "get": {
                 "tags": [
                     "Player Management"
                 ],
                 "summary": "Online játékosok listája",
                 "description": "Visszaadja az összes jelenleg online játékost",
-                "operationId": "6c607bbd6a3091423a9cc7a40427f3d3",
+                "operationId": "e0006fbf10d57bf4c9ad289b1c1968ca",
                 "responses": {
                     "200": {
                         "description": "Sikeres lekérdezés",
@@ -327,14 +327,14 @@
                 }
             }
         },
-        "/player/{hytaleUuid}/details": {
+        "/{hytaleUuid}/details": {
             "get": {
                 "tags": [
                     "Player Management"
                 ],
                 "summary": "Játékos részletes adatai",
                 "description": "Visszaadja az adott UUID-val rendelkező játékos összes adatát",
-                "operationId": "6f9b870cfd443f48e1787c1d37ac9dec",
+                "operationId": "6f99cc55ffddc2895939fb84b8f4d062",
                 "parameters": [
                     {
                         "name": "hytaleUuid",
@@ -405,14 +405,14 @@
                 }
             }
         },
-        "/player/cache/invalidate": {
+        "/cache/invalidate": {
             "post": {
                 "tags": [
                     "Cache Management"
                 ],
                 "summary": "Cache invalidálás",
                 "description": "Invalidálja a Redis cache-t egy adott UUID-ra vagy az összes játékosra",
-                "operationId": "27150cd629b7db03b136270af6484653",
+                "operationId": "082591946b628c555ea0b571444f2ccf",
                 "requestBody": {
                     "required": false,
                     "content": {
