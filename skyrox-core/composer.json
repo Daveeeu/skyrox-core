@@ -27,6 +27,7 @@
         "psr-4": {
             "App\\": "app/",
             "App\\Modules\\PlayerPermissions\\": "app/Modules/PlayerPermissions/src/",
+            "App\\Modules\\HytaleAuth\\": "app/Modules/HytaleAuth/src/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
