@@ -1,0 +1,23 @@
+### Player Login - UUID alapú
+POST http://localhost:8000/api/v1/player/login
+Content-Type: application/json
+
+{
+    "hytale_uuid": "abc123-def456-789ghi",
+    "player_name": "CoolHytalePlayer",
+    "server_name": "main-server"
+}
+
+### Permission Check - UUID alapú
+GET http://localhost:8000/api/v1/player/permission/check?hytale_uuid=abc123-def456-789ghi&permission=game.build
+
+### Player Details - UUID alapú
+GET http://localhost:8000/api/v1/player/abc123-def456-789ghi/details
+
+### Player Logout - UUID alapú
+POST http://localhost:8000/api/v1/player/logout
+Content-Type: application/json
+
+{
+    "hytale_uuid": "abc123-def456-789ghi"
+}
