@@ -27,7 +27,7 @@ class PlayerPermissionController extends Controller
      * Játékos bejelentkezés UUID alapon
      */
     #[OA\Post(
-        path: '/player/login',
+        path: '/login',
         summary: 'Játékos bejelentkezés',
         description: 'Fellépti a játékost a szerverre Hytale UUID alapján',
         tags: ['Player Management']
@@ -106,7 +106,7 @@ class PlayerPermissionController extends Controller
      * Játékos kijelentkezés UUID alapon
      */
     #[OA\Post(
-        path: '/player/logout',
+        path: '/logout',
         summary: 'Játékos kijelentkezés',
         description: 'Kilépteti a játékost a szerverről UUID alapján',
         tags: ['Player Management']
@@ -158,7 +158,7 @@ class PlayerPermissionController extends Controller
      * Permission ellenőrzés UUID alapon
      */
     #[OA\Get(
-        path: '/player/permission/check',
+        path: '/permission/check',
         summary: 'Jogosultság ellenőrzése',
         description: 'Ellenőrzi, hogy az adott Hytale UUID-val rendelkező játékosnak van-e jogosultsága',
         tags: ['Permission Management']
@@ -212,7 +212,7 @@ class PlayerPermissionController extends Controller
      * Online játékosok listája
      */
     #[OA\Get(
-        path: '/player/online',
+        path: '/online',
         summary: 'Online játékosok listája',
         description: 'Visszaadja az összes jelenleg online játékost',
         tags: ['Player Management']
@@ -260,7 +260,7 @@ class PlayerPermissionController extends Controller
      * Játékos részletes adatai UUID alapon
      */
     #[OA\Get(
-        path: '/player/{hytaleUuid}/details',
+        path: '/{hytaleUuid}/details',
         summary: 'Játékos részletes adatai',
         description: 'Visszaadja az adott UUID-val rendelkező játékos összes adatát',
         tags: ['Player Management']
@@ -305,7 +305,7 @@ class PlayerPermissionController extends Controller
      * Cache invalidálás
      */
     #[OA\Post(
-        path: '/player/cache/invalidate',
+        path: '/cache/invalidate',
         summary: 'Cache invalidálás',
         description: 'Invalidálja a Redis cache-t egy adott UUID-ra vagy az összes játékosra',
         tags: ['Cache Management']
