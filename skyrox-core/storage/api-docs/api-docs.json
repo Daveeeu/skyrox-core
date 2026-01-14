@@ -1,0 +1,472 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Hytale API",
+        "description": "API a Hytale szerver",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1/player-permissions",
+            "description": "API v1 szerver"
+        }
+    ],
+    "paths": {
+        "/player/login": {
+            "post": {
+                "tags": [
+                    "Player Management"
+                ],
+                "summary": "Játékos bejelentkezés",
+                "description": "Fellépti a játékost a szerverre Hytale UUID alapján",
+                "operationId": "a126506f328c5d598b7bc4ed7fc9ddc3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "hytale_uuid"
+                                ],
+                                "properties": {
+                                    "hytale_uuid": {
+                                        "description": "Hytale UUID",
+                                        "type": "string",
+                                        "example": "abc123-def456-789ghi"
+                                    },
+                                    "player_name": {
+                                        "description": "Játékos neve (opcionális)",
+                                        "type": "string",
+                                        "example": "CoolPlayer"
+                                    },
+                                    "server_name": {
+                                        "description": "Szerver neve (opcionális)",
+                                        "type": "string",
+                                        "example": "main-server"
+                                    },
+                                    "ip_address": {
+                                        "description": "Játékos IP címe (opcionális)",
+                                        "type": "string",
+                                        "example": "192.168.1.1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sikeres bejelentkezés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Játékos sikeresen bejelentkezett"
+                                        },
+                                        "permissions": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Hibás kérés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hibás UUID formátum"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player/logout": {
+            "post": {
+                "tags": [
+                    "Player Management"
+                ],
+                "summary": "Játékos kijelentkezés",
+                "description": "Kilépteti a játékost a szerverről UUID alapján",
+                "operationId": "b8e9289e0ad4c62f491cae24349cc621",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "hytale_uuid"
+                                ],
+                                "properties": {
+                                    "hytale_uuid": {
+                                        "description": "Hytale UUID",
+                                        "type": "string",
+                                        "example": "abc123-def456-789ghi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sikeres kijelentkezés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Játékos sikeresen kijelentkezett"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Hibás kérés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hibás UUID formátum"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player/permission/check": {
+            "get": {
+                "tags": [
+                    "Permission Management"
+                ],
+                "summary": "Jogosultság ellenőrzése",
+                "description": "Ellenőrzi, hogy az adott Hytale UUID-val rendelkező játékosnak van-e jogosultsága",
+                "operationId": "98fce01eb35931818fc601816b29a6aa",
+                "parameters": [
+                    {
+                        "name": "hytale_uuid",
+                        "in": "query",
+                        "description": "Hytale UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "abc123-def456-789ghi"
+                        }
+                    },
+                    {
+                        "name": "permission",
+                        "in": "query",
+                        "description": "Jogosultság neve",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "game.build"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Jogosultság ellenőrzése sikeres",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Jogosultság megvan"
+                                        },
+                                        "has_permission": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Hibás kérés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hibás paraméterek"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player/online": {
+            "get": {
+                "tags": [
+                    "Player Management"
+                ],
+                "summary": "Online játékosok listája",
+                "description": "Visszaadja az összes jelenleg online játékost",
+                "operationId": "6c607bbd6a3091423a9cc7a40427f3d3",
+                "responses": {
+                    "200": {
+                        "description": "Sikeres lekérdezés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Online játékosok betöltve"
+                                        },
+                                        "players": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "hytale_uuid": {
+                                                        "type": "string"
+                                                    },
+                                                    "player_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "server_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "ip_address": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Hibás kérés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hiba történt"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player/{hytaleUuid}/details": {
+            "get": {
+                "tags": [
+                    "Player Management"
+                ],
+                "summary": "Játékos részletes adatai",
+                "description": "Visszaadja az adott UUID-val rendelkező játékos összes adatát",
+                "operationId": "6f9b870cfd443f48e1787c1d37ac9dec",
+                "parameters": [
+                    {
+                        "name": "hytaleUuid",
+                        "in": "path",
+                        "description": "Hytale UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "abc123-def456-789ghi"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sikeres lekérdezés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Játékos adatok betöltve"
+                                        },
+                                        "hytale_uuid": {
+                                            "type": "string",
+                                            "example": "abc123-def456-789ghi"
+                                        },
+                                        "player_name": {
+                                            "type": "string",
+                                            "example": "CoolPlayer"
+                                        },
+                                        "permissions": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Játékos nem található",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Játékos nem található"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player/cache/invalidate": {
+            "post": {
+                "tags": [
+                    "Cache Management"
+                ],
+                "summary": "Cache invalidálás",
+                "description": "Invalidálja a Redis cache-t egy adott UUID-ra vagy az összes játékosra",
+                "operationId": "27150cd629b7db03b136270af6484653",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "hytale_uuid": {
+                                        "description": "Specifikus UUID (opcionális)",
+                                        "type": "string",
+                                        "example": "abc123-def456-789ghi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cache sikeresen invalidálva",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Összes player cache invalidálva"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Player Management",
+            "description": "Player Management"
+        },
+        {
+            "name": "Permission Management",
+            "description": "Permission Management"
+        },
+        {
+            "name": "Cache Management",
+            "description": "Cache Management"
+        }
+    ]
+}
